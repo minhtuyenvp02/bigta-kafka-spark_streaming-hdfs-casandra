@@ -23,10 +23,11 @@ public class SparkConsumer {
                 .master("local[*]")
                 .appName("ProcessStockData")
                 .getOrCreate();
+        session.sparkContext().setLogLevel("WARN");
 //        session.conf().set("spark.sql.shuffle.partitions", "10");
         Dataset<Row> df = session.readStream().format("kafka")
-                .option("kafka.bootstrap.servers", "kafka12:9092, kafka11:9092, kafka13:9092")
-                .option("subscribe", "fisrtdemo")
+                .option("kafka.bootstrap.servers", "localhost:8097, localhost:8098, localhost:8099")
+                .option("subscribe", "firstdemo")
                 .option("startingOffsets", "earliest")
                 .option("includeHeaders", "true")
                 .load();
@@ -38,7 +39,7 @@ public class SparkConsumer {
                 .select("data.*");
 
         StreamingQuery query = stocks.writeStream()
-                .outputMode("append")
+                .outputMode("update")
                 .format("console")
                 .start();
         query.awaitTermination();
