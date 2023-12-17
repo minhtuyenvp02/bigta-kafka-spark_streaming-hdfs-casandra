@@ -9,45 +9,42 @@ services:
     image: confluentinc/cp-kafka:7.2.1
     container_name: kafka11
     ports:
-      - "8097:8097"
+      - 8097:9092
     depends_on:
       - zookeeper
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: EXTERNAL:PLAINTEXT,INTERNAL:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: EXTERNAL://localhost:8097,INTERNAL://kafka11:9092
-      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:29092,OUTSIDE://localhost:8097
+      KAFKA_LISTENERS: INSIDE://:29092,OUTSIDE://:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
       KAFKA_CREATE_TOPICS: test_topic:1:1
-    volumes:
-      - ./kafka11/data:/var/lib/kafka/data
   kafka12:
     image: confluentinc/cp-kafka:7.2.1
     container_name: kafka12
     ports:
-      - "8098:8098"
+      - 8098:9092
     depends_on:
       - zookeeper
     environment:
       KAFKA_BROKER_ID: 2
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: EXTERNAL:PLAINTEXT,INTERNAL:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: EXTERNAL://localhost:8098,INTERNAL://kafka12:9092
-      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
-    volumes:
-      - ./kafka12/data:/var/lib/kafka/data
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:29092,OUTSIDE://localhost:8098
+      KAFKA_LISTENERS: INSIDE://:29092,OUTSIDE://:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
   kafka13:
     image: confluentinc/cp-kafka:7.2.1
     container_name: kafka13
     ports:
-      - "8099:8099"
+      - 8099:9092
     depends_on:
       - zookeeper
     environment:
       KAFKA_BROKER_ID: 3
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: EXTERNAL:PLAINTEXT,INTERNAL:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: EXTERNAL://localhost:8099,INTERNAL://kafka13:9092
-      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
-    volumes:
-      - ./kafka13/data:/var/lib/kafka/data
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:29092,OUTSIDE://localhost:8099
+      KAFKA_LISTENERS: INSIDE://:29092,OUTSIDE://:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
