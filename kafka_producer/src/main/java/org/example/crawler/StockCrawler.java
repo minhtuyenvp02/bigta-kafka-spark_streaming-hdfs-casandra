@@ -1,5 +1,7 @@
 package org.example.crawler;
 
+import com.datastax.oss.driver.shaded.codehaus.jackson.type.TypeReference;
+import com.datastax.oss.driver.shaded.guava.common.reflect.TypeToken;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -7,12 +9,14 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.gson.Gson;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.example.ticks.StockData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -114,24 +118,22 @@ public class StockCrawler {
 //            return newArrayNode;
 
 //            }
-//            JsonNode customStockData = ;
-//            System.out.println(stockDatas.toString());
-//            List<StockData> stockDatas = stockDataFetcher.getListStockData(stringStockCodes);
 //            List<StockData> datas = updateStockData(stockDatas);
 //            updateDataInJsonFile(stockType, datas);
+            updateDataInJsonFile(stockType, stockDatas);
         }
     }
 
 
-    private List<StockData> updateStockData(List<StockData> stockDatas) {
+    private List<StockData> updateStockData(JsonNode stockDatas) {
         List<StockData> updatedData = new ArrayList<>();
-
-        // Update stock data according to the JavaScript code
-
-        return updatedData;
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<StockCrawler.StockData>>() {}.getType();
+        return gson.fromJson(String.valueOf(stockDatas), listType);
     }
 
-    private void updateDataInJsonFile(String stockType, List<StockData> datas) {
+    public void updateDataInJsonFile(String stockType, JsonNode datas) {
+        String DATA_FOLDER = "/Users/minhtuyen02/MTuyen/bigdata_project/data_folder";
         String filePath = DATA_FOLDER + stockType + ".json";
         File file = new File(filePath);
 
@@ -152,11 +154,12 @@ public class StockCrawler {
                 String jsonContent = new String(jsonData);
                 List<StockData> fileData = new ArrayList<>();
 
+                List<StockData> data = null;
                 if (!jsonContent.isEmpty()) {
-                    fileData = Arrays.asList(new Gson().fromJson(jsonContent, StockData[].class));
+                    data = updateStockData(datas);
                 }
 
-                fileData.addAll(datas);
+                fileData.addAll(data);
                 FileWriter writer = new FileWriter(file);
                 writer.write(new Gson().toJson(fileData));
                 writer.close();
@@ -192,5 +195,32 @@ public class StockCrawler {
         private String fSValue;
         private String industry;
         private String crawledTime;
+
+        public StockData(String id, String sym, String c, String f, String g1, String g2, String g3, String g4, String g5, String g6, String lastPrice, String lastVolume, String lot, String ot, String avePrice, String highPrice, String lowPrice, String fBVol, String fSVolume, String fRoom, String fBValue, String fSValue, String industry, String crawledTime) {
+            this.id = id;
+            this.sym = sym;
+            this.c = c;
+            this.f = f;
+            this.g1 = g1;
+            this.g2 = g2;
+            this.g3 = g3;
+            this.g4 = g4;
+            this.g5 = g5;
+            this.g6 = g6;
+            this.lastPrice = lastPrice;
+            this.lastVolume = lastVolume;
+            this.lot = lot;
+            this.ot = ot;
+            this.avePrice = avePrice;
+            this.highPrice = highPrice;
+            this.lowPrice = lowPrice;
+            this.fBVol = fBVol;
+            this.fSVolume = fSVolume;
+            this.fRoom = fRoom;
+            this.fBValue = fBValue;
+            this.fSValue = fSValue;
+            this.industry = industry;
+            this.crawledTime = crawledTime;
+        }
     }
 }
