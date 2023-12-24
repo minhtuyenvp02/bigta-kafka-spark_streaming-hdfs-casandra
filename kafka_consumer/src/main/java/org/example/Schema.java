@@ -7,7 +7,7 @@ public class Schema {
     private StructType schema;
     public Schema() {
         this.schema = DataTypes.createStructType(new StructField[]{
-                DataTypes.createStructField("id", DataTypes.IntegerType, true),
+                DataTypes.createStructField("id", DataTypes.LongType, true),
                 DataTypes.createStructField("sym", DataTypes.StringType, true),
                 DataTypes.createStructField("mc", DataTypes.StringType, true),
                 DataTypes.createStructField("c", DataTypes.DoubleType, true),
@@ -45,7 +45,7 @@ public class Schema {
                 DataTypes.createStructField("sType", DataTypes.StringType, true),
                 DataTypes.createStructField("sBenefit", DataTypes.StringType, true),
                 DataTypes.createStructField("industry", DataTypes.StringType, true),
-                DataTypes.createStructField("crawledTime", DataTypes.StringType, true)}
+                DataTypes.createStructField("crawledTime", DataTypes.TimestampType, true)}
         );
     }
 

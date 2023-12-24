@@ -82,8 +82,8 @@ public class StockCrawler {
         List<IndustryType> typeList = Constant.getListIndustryType();
 //        System.out.println(typeList.toString());
 
-        if ((currentTime.compareTo("01:00") >= 0 && currentTime.compareTo("14:30") <= 0)
-                || (currentTime.compareTo("14:00") >= 0 && currentTime.compareTo("23:30") <= 0)) {
+        if ((currentTime.compareTo("09:00") >= 0 && currentTime.compareTo("12:30") <= 0)
+                || (currentTime.compareTo("14:00") >= 0 && currentTime.compareTo("16:30") <= 0)) {
             System.out.println("Crawling data at " + currentTime);
             String crawledTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
             List<String> stockCodes = stockDataFetcher.getStockCode(stockType);
@@ -101,11 +101,11 @@ public class StockCrawler {
 //                System.out.println(node.toString());
                 typeList.forEach(typeStock ->{
                     if(typeStock.getListStockCode().contains(node.get("sym").toString())){
-                        JsonNode arrayObject = node.deepCopy();
-                        ((ObjectNode) arrayObject).put("industry", typeStock.getName());
-                        ((ObjectNode) arrayObject).put("crawledTime", crawledTime);
+//                        JsonNode arrayObject = node.deepCopy();
+                        ((ObjectNode) node).put("industry", typeStock.getName());
+                        ((ObjectNode) node).put("crawledTime", crawledTime);
                         try {
-                            kafkaProducer.send(new ProducerRecord<>(topic,"value", arrayObject));
+                            kafkaProducer.send(new ProducerRecord<>(topic,"value", node));
                         } catch (Exception exception){
                             log.warn("problem when send - ignoring", exception);
                         }
