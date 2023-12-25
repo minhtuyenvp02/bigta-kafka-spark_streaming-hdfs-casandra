@@ -23,14 +23,14 @@ public class SparkConsumer {
         SparkSession session = SparkSession.builder()
                 .master("local[*]")
                 .appName("ProcessStockData")
-                .config("spark.cassandra.connection.host", "localhost")
+                .config("spark.cassandra.connection.host", "cassandra")
                 .config("spark.cassandra.connection.port", "9042")
                 .getOrCreate();
         session.sparkContext().setLogLevel("WARN");
 //        session.conf().set("spark.sql.shuffle.partitions", "10");
         Dataset<Row> df = session.readStream()
                 .format("kafka")
-                .option("kafka.bootstrap.servers", "localhost:8097, localhost:8098, localhost:8099")
+                .option("kafka.bootstrap.servers", "kafka11:8097, kafka12:8098, kafka13:8099")
                 .option("subscribe", "firstdemo")
                 .option("startingOffsets", "earliest")
                 .option("includeHeaders", "true")

@@ -80,7 +80,7 @@ public class StockProducer {
         final String topicName = "firstdemo" ;
         final RateLimiter rateLimiter = RateLimiter.create(maxRequestsPerSecond);
         Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:8097,localhost:8098,localhost:8099");
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka11:8097,kafka12:8098,kafka13:8099");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class.getName());
         props.put(ProducerConfig.LINGER_MS_CONFIG, "20");
@@ -90,10 +90,6 @@ public class StockProducer {
         final KafkaProducer<String, JsonNode> producer = new KafkaProducer<>(props);
 //        StockCrawler
         AtomicLong errorCount = new AtomicLong();
-
-
-        // Create a counter to track the number of records we've successfully
-        // created so far.
         final AtomicLong successCount = new AtomicLong();
 
         // This callback will be invoked whenever a send completes. It reports any
