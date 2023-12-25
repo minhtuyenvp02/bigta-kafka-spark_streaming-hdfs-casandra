@@ -60,3 +60,7 @@ services:
     container_name: kafka_producer
     ports:
       - "8080:8080"
+    environment:
+      KAFKA_11_HOST: kafka11
+      KAFKA_12_HOST: kafka12
+      KAFKA_13_HOST: kafka13
