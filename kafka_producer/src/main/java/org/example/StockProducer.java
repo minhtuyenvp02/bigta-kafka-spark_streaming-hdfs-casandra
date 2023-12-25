@@ -65,6 +65,7 @@ import java.util.concurrent.atomic.AtomicLong;
 //    }
 //}
 public class StockProducer {
+
     private static Logger LOGGER = LoggerFactory.getLogger("StockProducer");
     private static final long PROGRESS_REPORTING_INTERVAL = 5;
     private static final Logger log = LoggerFactory.getLogger("StockProducer");
@@ -76,11 +77,22 @@ public class StockProducer {
 //                    "[2]: string topic name" +
 //                    "[3]: kafka bootstrap.servers");
 //        }
+        String kafka11Host = System.getenv("KAFKA_11_HOST");
+        String kafka12Host = System.getenv("KAFKA_12_HOST");
+        String kafka13Host = System.getenv("KAFKA_13_HOST");
+
+
+        // Kiểm tra xem biến môi trường có tồn tại hay không
+        if (kafka11Host == null) {
+            System.out.println("KAFKA_11_HOST not found");
+            kafka11Host = "localhost";
+        }
+
         final int maxRequestsPerSecond = 100;
         final String topicName = "firstdemo" ;
         final RateLimiter rateLimiter = RateLimiter.create(maxRequestsPerSecond);
         Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka11:8097,kafka12:8098,kafka13:8099");
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafka11Host + ":8097,kafka12:8098,kafka13:8099");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class.getName());
         props.put(ProducerConfig.LINGER_MS_CONFIG, "20");
