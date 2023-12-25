@@ -54,3 +54,9 @@ services:
     container_name: cassandra
     ports:
       - "9042:9042"
+
+  kafka_producer:
+    image: minhtuyenvp02/spark_stock_image
+    container_name: kafka_producer
+    ports:
+      - "8080:8080"
