@@ -90,10 +90,6 @@ public class StockProducer {
         final KafkaProducer<String, JsonNode> producer = new KafkaProducer<>(props);
 //        StockCrawler
         AtomicLong errorCount = new AtomicLong();
-
-
-        // Create a counter to track the number of records we've successfully
-        // created so far.
         final AtomicLong successCount = new AtomicLong();
 
         // This callback will be invoked whenever a send completes. It reports any
