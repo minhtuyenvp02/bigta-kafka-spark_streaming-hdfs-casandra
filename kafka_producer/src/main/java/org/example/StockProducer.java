@@ -11,6 +11,9 @@ import org.example.crawler.StockCrawler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.Properties;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -77,6 +80,19 @@ public class StockProducer {
 //                    "[2]: string topic name" +
 //                    "[3]: kafka bootstrap.servers");
 //        }
+        int port = 9999; // Cổng mà bạn muốn sử dụng
+
+        try {
+            ServerSocket serverSocket = new ServerSocket(port);
+            System.out.println("Server is listening on port " + port);
+
+            while (true) {
+                Socket clientSocket = serverSocket.accept();
+                // Xử lý kết nối từ clientSocket tại đây
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         String kafka11Host = System.getenv("KAFKA_11_HOST");
         String kafka12Host = System.getenv("KAFKA_12_HOST");
         String kafka13Host = System.getenv("KAFKA_13_HOST");

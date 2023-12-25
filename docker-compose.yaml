@@ -59,7 +59,7 @@ services:
     image: minhtuyenvp02/kafka_producer
     container_name: kafka_producer
     ports:
-      - "8080:8080"
+      - "9999:9999"
     environment:
       KAFKA_11_HOST: kafka11
       KAFKA_12_HOST: kafka12
