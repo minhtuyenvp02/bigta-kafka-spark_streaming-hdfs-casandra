@@ -18,14 +18,18 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build Docker kafka_producer image
-        run: docker buildx create --use
+        run: docker buildx create --use --name mybuilder
+      - name: Build Docker kafka_producer image
+        run: docker buildx inspect --bootstrap
       - name: Build Docker kafka_consumer image
-        run: docker buildx create --use
+        run: docker buildx create --use --name mybuilder
+      - name: Build Docker kafka_consumer image
+        run: docker buildx inspect --bootstrap
 
       - name: Build Docker kafka_producer image
-        run : docker buildx build -t ${{ secrets.DOCKERHUB_USERNAME }}/kafka_producer ./kafka_producer --platform linux/amd64,linux/arm64
+        run : docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_USERNAME }}/kafka_producer ./kafka_producer
       - name: Build Docker kafka_consumer image
-        run: docker buildx build -t ${{ secrets.DOCKERHUB_USERNAME }}/kafka_consumer ./kafka_consumer --platform linux/amd64,linux/arm64
+        run: docker buildx build --platform linux/amd64,linux/arm64  -t ${{ secrets.DOCKERHUB_USERNAME }}/kafka_consumer ./kafka_consumer
 
       - name: Push Docker kafka_producer image
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/kafka_producer
