@@ -56,7 +56,7 @@ services:
       - "9042:9042"
 
   kafka_producer:
-    image: minhtuyenvp02/spark_stock_image
+    image: minhtuyenvp02/kafka_producer
     container_name: kafka_producer
     ports:
       - "8080:8080"
