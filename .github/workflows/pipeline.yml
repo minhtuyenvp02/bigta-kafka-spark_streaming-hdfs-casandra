@@ -27,11 +27,11 @@ jobs:
         run: docker buildx inspect --bootstrap
 
       - name: Build Docker kafka_producer image
-        run : docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_USERNAME }}/kafka_producer ./kafka_producer
+        run : docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_USERNAME }}/kafka_producer ./kafka_producer --push
       - name: Build Docker kafka_consumer image
-        run: docker buildx build --platform linux/amd64,linux/arm64  -t ${{ secrets.DOCKERHUB_USERNAME }}/kafka_consumer ./kafka_consumer
-
-      - name: Push Docker kafka_producer image
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/kafka_producer
-      - name: Push Docker kafka_consumer image
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/kafka_consumer
+        run: docker buildx build --platform linux/amd64,linux/arm64  -t ${{ secrets.DOCKERHUB_USERNAME }}/kafka_consumer ./kafka_consumer --push
+#
+#      - name: Push Docker kafka_producer image
+#        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/kafka_producer
+#      - name: Push Docker kafka_consumer image
+#        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/kafka_consumer
