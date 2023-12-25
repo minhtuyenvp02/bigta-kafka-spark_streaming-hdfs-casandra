@@ -18,8 +18,6 @@
             <artifactId>spark-sql_2.12</artifactId>
             <version>${org.apache.spark.spark-sql.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-hdfs -->
-        <!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-hdfs -->
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-hdfs</artifactId>
@@ -62,16 +60,6 @@
             <groupId>com.datastax.spark</groupId>
             <artifactId>spark-cassandra-connector_2.12</artifactId>
             <version>${com.datastax.spark.spark-cassandra-connector.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.datastax.spark</groupId>
-            <artifactId>spark-cassandra-connector-java_2.11</artifactId>
-            <version>${com.datastax.spark.spark-cassandra-connector-java.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${postgres.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.datastax.spark/spark-cassandra-connector -->
         <dependency>
