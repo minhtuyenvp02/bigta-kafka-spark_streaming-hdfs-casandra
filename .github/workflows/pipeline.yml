@@ -22,7 +22,7 @@ jobs:
       - name: Build Docker kafka_producer image
         run: docker buildx inspect --bootstrap
       - name: Build Docker kafka_consumer image
-        run: docker buildx create --use --name mybuilder
+        run: docker buildx create --use --name mybuilder2
       - name: Build Docker kafka_consumer image
         run: docker buildx inspect --bootstrap
 
